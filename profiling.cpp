@@ -25,35 +25,35 @@ namespace profiling {
 		}
 		std::cout << "Buffer reads:" << std::endl;
 		for (auto &bb : buffer_read_benchmarks) {
-			auto duration_ns = duration_cast<nanoseconds>(bb.end - bb.start);
-			std::cout << "Id: " << bb.buffer_id << " | Size (bytes): " << bb.size << " | Duration (ns): " << duration_ns.count() << std::endl;
+			auto duration_ns = duration_cast<nanoseconds>(bb->end - bb->start);
+			std::cout << "Id: " << bb->buffer_id << " | Size (bytes): " << bb->size << " | Duration (ns): " << duration_ns.count() << std::endl;
 		}
 		std::cout << "Buffer writes:" << std::endl;
 		for (auto &bb : buffer_write_benchmarks) {
-			auto duration_ns = duration_cast<nanoseconds>(bb.end - bb.start);
-			std::cout << "Id: " << bb.buffer_id << " | Size (bytes): " << bb.size << " | Duration (ns): " << duration_ns.count() << std::endl;
+			auto duration_ns = duration_cast<nanoseconds>(bb->end - bb->start);
+			std::cout << "Id: " << bb->buffer_id << " | Size (bytes): " << bb->size << " | Duration (ns): " << duration_ns.count() << std::endl;
 		}
 		std::cout << "Kernel executions:" << std::endl;
 		for (auto &kb : kernel_benchmarks) {
-			auto duration_ns = duration_cast<nanoseconds>(kb.end - kb.start);
-			std::cout << "Id: " << kb.kernel_id << " | Duration (ns): " << duration_ns.count() << std::endl;
+			auto duration_ns = duration_cast<nanoseconds>(kb->end - kb->start);
+			std::cout << "Id: " << kb->kernel_id << " | Duration (ns): " << duration_ns.count() << std::endl;
 		}
 		std::cout << "Resource allocations:" << std::endl;
 		for (auto &rb : resource_allocation_benchmarks) {
-			auto duration_ns = duration_cast<nanoseconds>(rb.end - rb.start);
+			auto duration_ns = duration_cast<nanoseconds>(rb->end - rb->start);
 			std::cout
-				<< "# Kernels: " << rb.kernel_amount 
-				<< " | # Buffers: " << rb.buffer_amount 
-				<< " | # Events: " << rb.event_amount 
+				<< "# Kernels: " << rb->kernel_amount 
+				<< " | # Buffers: " << rb->buffer_amount 
+				<< " | # Events: " << rb->event_amount 
 				<< " | Duration (ns): " << duration_ns.count() << std::endl;
 		}
 		std::cout << "Resource deallocations:" << std::endl;
 		for (auto &rb : resource_deallocation_benchmarks) {
-			auto duration_ns = duration_cast<nanoseconds>(rb.end - rb.start);
+			auto duration_ns = duration_cast<nanoseconds>(rb->end - rb->start);
 			std::cout
-				<< "# Kernels: " << rb.kernel_amount 
-				<< " | # Buffers: " << rb.buffer_amount 
-				<< " | # Events: " << rb.event_amount 
+				<< "# Kernels: " << rb->kernel_amount 
+				<< " | # Buffers: " << rb->buffer_amount 
+				<< " | # Events: " << rb->event_amount 
 				<< " | Duration (ns): " << duration_ns.count() << std::endl;
 		}
     }
@@ -91,51 +91,51 @@ namespace profiling {
 		}
         std::vector<json> buffer_reads;
 		for (auto &bb : buffer_read_benchmarks) {
-            auto duration_ns = duration_cast<nanoseconds>(bb.end - bb.start);
+            auto duration_ns = duration_cast<nanoseconds>(bb->end - bb->start);
             json read = {
-                {"buffer_id", bb.buffer_id},
-                {"size", bb.size},
+                {"buffer_id", bb->buffer_id},
+                {"size", bb->size},
                 {"duration", duration_ns.count()}
             };
             buffer_reads.emplace_back(read);
 		}
 		std::vector<json> buffer_writes;
 		for (auto &bb : buffer_write_benchmarks) {
-			auto duration_ns = duration_cast<nanoseconds>(bb.end - bb.start);
+			auto duration_ns = duration_cast<nanoseconds>(bb->end - bb->start);
             json write = {
-                {"buffer_id", bb.buffer_id},
-                {"size", bb.size},
+                {"buffer_id", bb->buffer_id},
+                {"size", bb->size},
                 {"duration", duration_ns.count()}
             };
             buffer_writes.emplace_back(write);
 		}
 		std::vector<json> kernel_executions;
 		for (auto &kb : kernel_benchmarks) {
-			auto duration_ns = duration_cast<nanoseconds>(kb.end - kb.start);
+			auto duration_ns = duration_cast<nanoseconds>(kb->end - kb->start);
             json exec = {
-                {"kernel_id", kb.kernel_id},
+                {"kernel_id", kb->kernel_id},
                 {"duration", duration_ns.count()}
             };
             kernel_executions.emplace_back(exec);
 		}
 		std::vector<json> resource_allocations;
 		for (auto &rb : resource_allocation_benchmarks) {
-			auto duration_ns = duration_cast<nanoseconds>(rb.end - rb.start);
+			auto duration_ns = duration_cast<nanoseconds>(rb->end - rb->start);
             json alloc = {
-                {"kernel_amount", rb.kernel_amount},
-                {"buffer_amount", rb.buffer_amount},
-                {"event_amount", rb.event_amount},
+                {"kernel_amount", rb->kernel_amount},
+                {"buffer_amount", rb->buffer_amount},
+                {"event_amount", rb->event_amount},
                 {"duration", duration_ns.count()}
             };
             resource_allocations.emplace_back(alloc);
 		}
 		std::vector<json> resource_deallocations;
 		for (auto &rb : resource_deallocation_benchmarks) {
-			auto duration_ns = duration_cast<nanoseconds>(rb.end - rb.start);
+			auto duration_ns = duration_cast<nanoseconds>(rb->end - rb->start);
             json dealloc = {
-                {"kernel_amount", rb.kernel_amount},
-                {"buffer_amount", rb.buffer_amount},
-                {"event_amount", rb.event_amount},
+                {"kernel_amount", rb->kernel_amount},
+                {"buffer_amount", rb->buffer_amount},
+                {"event_amount", rb->event_amount},
                 {"duration", duration_ns.count()}
             };
 			resource_deallocations.emplace_back(dealloc);

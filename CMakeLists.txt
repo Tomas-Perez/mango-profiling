@@ -1,11 +1,14 @@
 cmake_minimum_required (VERSION 2.8.11)
 project (PROFILING)
 
+if (NOT MANGO_ROOT) 
+    message(FATAL_ERROR "You have to specify -DMANGO_ROOT=\"/path/to/mango\"!")
+endif (NOT MANGO_ROOT)
+
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Choose debug or release" FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
-set(MANGO_ROOT /opt/mango)
 set(INCLUDE_DIR ${MANGO_ROOT}/include/profiling)
 set(LIB_DIR ${MANGO_ROOT}/lib/profiling)
 set(EXPORT_DIR ${MANGO_ROOT}/lib/cmake/profiling)
